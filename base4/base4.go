@@ -22,7 +22,6 @@ func NewEncoding(encoding string) *Encoding {
 		panic("duplicate encoding key")
 	}
 	e := new(Encoding)
-	//e.padChar = StdPadding
 	copy(e.encode[:], []rune(encoding))
 	e.decodeMap = make(map[rune]byte, 4)
 	for i, v := range []rune(encoding) {
@@ -41,14 +40,12 @@ func (enc *Encoding) Encode(dst []rune, src []byte) {
 		return
 	}
 	_ = enc.encode
-	di, si := 0, 0
-	for si < n {
+	for di, si := 0, 0; si < n; si++ {
 		for shift := 6; shift >= 0; shift -= 2 {
 			idx := (src[si] >> shift) & 0b11
 			dst[di] = enc.encode[idx]
 			di++
 		}
-		si++
 	}
 }
 
@@ -69,10 +66,8 @@ func (enc *Encoding) Decode(dst []byte, src []rune) (int, error) {
 		return 0, errors.New("错误的Base4长度")
 	}
 	di, si := 0, 0
-	for si < n-3 {
+	for ; si < n-3; si, di = si+4, di+1 {
 		dst[di] = enc.decodeMap[src[si]]<<6 | enc.decodeMap[src[si+1]]<<4 | enc.decodeMap[src[si+2]]<<2 | enc.decodeMap[src[si+3]]
-		si += 4
-		di++
 	}
 
 	return di, nil

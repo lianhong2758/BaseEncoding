@@ -10,8 +10,8 @@ var (
 )
 
 type Encoding struct {
-	encode    [16]rune  
-	decodeMap map[rune]byte 
+	encode    [16]rune
+	decodeMap map[rune]byte
 }
 
 func NewEncoding(encoding string) *Encoding {
@@ -40,16 +40,14 @@ func (enc *Encoding) Encode(dst []rune, src []byte) {
 		return
 	}
 	_ = enc.encode
-	di, si := 0, 0
-	for si < n {
+
+	for di, si := 0, 0; si < n; di, si = di+2, si+1 {
 		dst[di] = enc.encode[src[si]>>4]
 		dst[di+1] = enc.encode[src[si]&0b1111]
-		di += 2
-		si++
 	}
 }
 
-// EncodeToString returns the base64 encoding of src.
+// 快捷编码为字符串
 func (enc *Encoding) EncodeToString(src []byte) string {
 	buf := make([]rune, enc.EncodedLen(len(src)))
 	enc.Encode(buf, src)
@@ -66,15 +64,14 @@ func (enc *Encoding) Decode(dst []byte, src []rune) (int, error) {
 		return 0, errors.New("错误的Base16长度")
 	}
 	di, si := 0, 0
-	for si < n-1 {
+	for ; si < n-1; si, di = si+2, di+1 {
 		dst[di] = enc.decodeMap[src[si]]<<4 | enc.decodeMap[src[si+1]]
-		si += 2
-		di++
 	}
 
 	return di, nil
 }
 
+// 快捷解码为字符串
 func (enc *Encoding) DecodeString(s string) ([]byte, error) {
 	dbuf := make([]byte, enc.DecodedLen(len([]rune(s))))
 	n, err := enc.Decode(dbuf, []rune(s))
