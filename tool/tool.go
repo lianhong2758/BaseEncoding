@@ -28,3 +28,16 @@ func HasDuplicateChars(s string) bool {
 	}
 	return false
 }
+
+//检查是否有重复key
+func HasDuplicateCharsWithPadding(s string, padchar rune) bool {
+	charMap := make(map[rune]bool)
+	charMap[padchar] = true
+	for _, c := range s {
+		if charMap[c] {
+			return true
+		}
+		charMap[c] = true
+	}
+	return false
+}

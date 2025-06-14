@@ -1,6 +1,7 @@
 package base8
 
 import (
+	"baseencoding/tool"
 	"errors"
 	"fmt"
 )
@@ -22,6 +23,9 @@ type Encoding struct {
 func NewEncoding(encoding string) *Encoding {
 	if len([]rune(encoding)) != 8 {
 		panic("encoding alphabet is not 8-runes long")
+	}
+	if tool.HasDuplicateCharsWithPadding(encoding, StdPadding) {
+		panic("duplicate encoding key")
 	}
 	e := new(Encoding)
 	e.padChar = StdPadding
