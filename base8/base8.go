@@ -110,7 +110,6 @@ func (enc *Encoding) Encode(dst []rune, src []byte) {
 
 // 快捷编码位字符串
 func (enc *Encoding) EncodeToString(src []byte) string {
-	fmt.Println(enc.padChar)
 	buf := make([]rune, enc.EncodedLen(len(src)))
 	enc.Encode(buf, src)
 	return string(buf)
