@@ -8,11 +8,11 @@ import (
 )
 
 func TestBase16(t *testing.T) {
-	encoder := base16.NewEncoding("哈基米那咩鲁多阿西嗨压库椰果曼波")
+	encoder := base16.NewEncoding("哈基米南北绿多阿西噶雅酷奶农曼波")
 	//encoder := base16.StdEncoding
 	input := "这是base16加密"
 	debyte := encoder.EncodeToString(tool.StringToBytes(input))
-	fmt.Println(debyte)
+	fmt.Println(debyte) //曼西酷波噶噶曼多噶西雅波多米多基阿南多绿南基南多曼绿西雅雅哈曼绿雅波西多
 	enbyte, err := encoder.DecodeString(debyte)
 	if err != nil {
 		t.Error(err)
