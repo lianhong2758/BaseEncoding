@@ -67,11 +67,16 @@ func (base *Base) DisPlay() {
 	case 2:
 		fmt.Printf("\t[%s]请选择进行加密/解密:\n\t[0] 加密\n\t[1] 解密\n\t[2]返回主页\n", typeMap[base.Types])
 	case 3:
-		fmt.Printf("[%s]请输入想要加密的文字:\n", typeMap[base.Types])
+		switch base.EncodeType {
+		case 0:
+			fmt.Printf("[%s]请输入想要加密的文字:\n", typeMap[base.Types])
+		case 1:
+			fmt.Printf("[%s]请输入想要解密的文字:\n", typeMap[base.Types])
+		}
 	case 4:
 		fmt.Println(base.Out)
 		fmt.Println()
-		fmt.Printf("[%s]是否继续?\n\t[0] 继续\n\t[1]返回主页\n", typeMap[base.Types])
+		fmt.Printf("[%s]是否继续?\n\t[0] 继续加密\n\t[1] 继续解密\n\t[2]返回主页\n", typeMap[base.Types])
 	}
 }
 func (base *Base) In() {
@@ -192,8 +197,12 @@ func (base *Base) Process() {
 	case 4:
 		switch base.NextType {
 		case 0:
+			base.EncodeType = 0
 			base.Page = 3
 		case 1:
+			base.EncodeType = 1
+			base.Page = 3
+		case 2:
 			base.Ls()
 			base.Page = 0
 		default:
