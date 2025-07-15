@@ -74,6 +74,7 @@ func (base *Base) DisPlay() {
 			fmt.Printf("[%s]请输入想要解密的文字:\n", typeMap[base.Types])
 		}
 	case 4:
+		fmt.Println()
 		fmt.Println(base.Out)
 		fmt.Println()
 		fmt.Printf("[%s]是否继续?\n\t[0] 继续加密\n\t[1] 继续解密\n\t[2]返回主页\n", typeMap[base.Types])
@@ -88,6 +89,7 @@ func (base *Base) In() {
 	case 2:
 		fmt.Scanf("%d\n", &base.EncodeType)
 	case 3:
+		base.Input = ""
 		fmt.Scanf("%s\n", &base.Input)
 	case 4:
 		fmt.Scanf("%d\n", &base.NextType)
