@@ -126,7 +126,7 @@ func (base *Base) Process() {
 		case 2: //用户输入
 			fmt.Println("请输入你的秘钥,要求与选择的加解密类型长度一致(举例base4需要输入4个不同字符组成的字符串):")
 			var userkey string
-			fmt.Scanf("%s", &userkey)
+			fmt.Scanf("%s\n", &userkey)
 			userkey = strings.TrimSpace(userkey)
 			if !tool.HasDuplicateChars(userkey) {
 				base.Key = userkey
